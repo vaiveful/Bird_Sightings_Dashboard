@@ -1,0 +1,20 @@
+import requests
+import pandas as pd
+import json
+
+
+url = 'https://api.ebird.org/v2/data/obs/ES/recent/notable'
+
+headers = {'X-eBirdApiToken': 'ENTER YOUR EBIRD API CODE'}
+
+response = requests.get(url, headers=headers)
+
+if response.status_code == 200:
+    data = response.json()
+    df = pd.DataFrame(data)
+    print(df.head())
+else:
+    print(f"Error: {response.status_code}")
+
+df.to_csv("bird_data.csv", index=False)
+print("Data exported to bird_data.csv")
